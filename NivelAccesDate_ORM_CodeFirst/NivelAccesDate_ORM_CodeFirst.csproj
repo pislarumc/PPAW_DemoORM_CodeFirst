@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{C8A7A2C2-FCA9-46B2-A4B5-C67ED9D05E39}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NivelAccesDate_ORM_CodeFirst</RootNamespace>
+    <AssemblyName>NivelAccesDate_ORM_CodeFirst</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Interfaces\IDatabaseContext.cs" />
+    <Compile Include="Migrations\202210241619040_DataBaseCodeFirstV_1.cs" />
+    <Compile Include="Migrations\202210241619040_DataBaseCodeFirstV_1.designer.cs">
+      <DependentUpon>202210241619040_DataBaseCodeFirstV_1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210241633331_DataBaseCodeFirstV_11.cs" />
+    <Compile Include="Migrations\202210241633331_DataBaseCodeFirstV_11.designer.cs">
+      <DependentUpon>202210241633331_DataBaseCodeFirstV_11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210241638303_DataBaseCodeFirstV_12.cs" />
+    <Compile Include="Migrations\202210241638303_DataBaseCodeFirstV_12.designer.cs">
+      <DependentUpon>202210241638303_DataBaseCodeFirstV_12.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202210241653172_DataBaseCodeFirstV_13.cs" />
+    <Compile Include="Migrations\202210241653172_DataBaseCodeFirstV_13.designer.cs">
+      <DependentUpon>202210241653172_DataBaseCodeFirstV_13.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301021121030_Adaugare_tabele_efect_si_istoric.cs" />
+    <Compile Include="Migrations\202301021121030_Adaugare_tabele_efect_si_istoric.designer.cs">
+      <DependentUpon>202301021121030_Adaugare_tabele_efect_si_istoric.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301030939551_Addition_of_logic_delet.cs" />
+    <Compile Include="Migrations\202301030939551_Addition_of_logic_delet.designer.cs">
+      <DependentUpon>202301030939551_Addition_of_logic_delet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301050938132_Adaugare_campuri_effect.cs" />
+    <Compile Include="Migrations\202301050938132_Adaugare_campuri_effect.designer.cs">
+      <DependentUpon>202301050938132_Adaugare_campuri_effect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301051112061_Adaugare_campuri_effect_integer.cs" />
+    <Compile Include="Migrations\202301051112061_Adaugare_campuri_effect_integer.designer.cs">
+      <DependentUpon>202301051112061_Adaugare_campuri_effect_integer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301071905348_tests_virtual_parameters.cs" />
+    <Compile Include="Migrations\202301071905348_tests_virtual_parameters.designer.cs">
+      <DependentUpon>202301071905348_tests_virtual_parameters.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301071922491_tests_update_foreign_key.cs" />
+    <Compile Include="Migrations\202301071922491_tests_update_foreign_key.designer.cs">
+      <DependentUpon>202301071922491_tests_update_foreign_key.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301071926105_tests_update_foreign_key_recheck.cs" />
+    <Compile Include="Migrations\202301071926105_tests_update_foreign_key_recheck.designer.cs">
+      <DependentUpon>202301071926105_tests_update_foreign_key_recheck.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301091623035_test_migrare_imagine.cs" />
+    <Compile Include="Migrations\202301091623035_test_migrare_imagine.designer.cs">
+      <DependentUpon>202301091623035_test_migrare_imagine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202301091701373_test_migrare_imagine_bun.cs" />
+    <Compile Include="Migrations\202301091701373_test_migrare_imagine_bun.designer.cs">
+      <DependentUpon>202301091701373_test_migrare_imagine_bun.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DatabaseContext.cs" />
+    <Compile Include="Models\Effect.cs" />
+    <Compile Include="Models\History.cs" />
+    <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LibrarieModele\LibrarieModele.csproj">
+      <Project>{5ca18520-ee12-4a6a-b47d-d034f8142531}</Project>
+      <Name>LibrarieModele</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202210241619040_DataBaseCodeFirstV_1.resx">
+      <DependentUpon>202210241619040_DataBaseCodeFirstV_1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210241633331_DataBaseCodeFirstV_11.resx">
+      <DependentUpon>202210241633331_DataBaseCodeFirstV_11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210241638303_DataBaseCodeFirstV_12.resx">
+      <DependentUpon>202210241638303_DataBaseCodeFirstV_12.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202210241653172_DataBaseCodeFirstV_13.resx">
+      <DependentUpon>202210241653172_DataBaseCodeFirstV_13.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301021121030_Adaugare_tabele_efect_si_istoric.resx">
+      <DependentUpon>202301021121030_Adaugare_tabele_efect_si_istoric.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301030939551_Addition_of_logic_delet.resx">
+      <DependentUpon>202301030939551_Addition_of_logic_delet.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301050938132_Adaugare_campuri_effect.resx">
+      <DependentUpon>202301050938132_Adaugare_campuri_effect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301051112061_Adaugare_campuri_effect_integer.resx">
+      <DependentUpon>202301051112061_Adaugare_campuri_effect_integer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301071905348_tests_virtual_parameters.resx">
+      <DependentUpon>202301071905348_tests_virtual_parameters.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301071922491_tests_update_foreign_key.resx">
+      <DependentUpon>202301071922491_tests_update_foreign_key.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301071926105_tests_update_foreign_key_recheck.resx">
+      <DependentUpon>202301071926105_tests_update_foreign_key_recheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301091623035_test_migrare_imagine.resx">
+      <DependentUpon>202301091623035_test_migrare_imagine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202301091701373_test_migrare_imagine_bun.resx">
+      <DependentUpon>202301091701373_test_migrare_imagine_bun.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

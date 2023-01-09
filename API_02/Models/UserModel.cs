@@ -1,0 +1,38 @@
+﻿using System;
+using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.WebPages.Html;
+
+namespace API_02.Models
+{
+    public class UserModel
+    {
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string Password { get; set; }
+        public string UserId { get; set; }
+        public string Role { get; set; }
+        public bool Subscribed { get; set; }
+        public bool Deleted { get; set; }
+
+        public IEnumerable<SelectListItem> Roles
+        {
+            get
+            {
+                List<string> roles = new List<string> { "Utilizator", "Administrator" };
+                return
+                    roles.Select(role =>
+                        new SelectListItem
+                        {
+                            Text = role,
+                            Value = role,
+                            Selected = role.Equals(Role)
+                        });
+            }
+        }
+
+    }
+}
