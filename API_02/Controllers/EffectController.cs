@@ -64,7 +64,8 @@ namespace API_02.Controllers
             Mapper mapper = new Mapper(config);
             NivelAccesDate_ORM_CodeFirst.Models.Effect effectForDB = mapper
                 .Map<API_02.Models.EffectModel, NivelAccesDate_ORM_CodeFirst.Models.Effect>(effect);
-            EffectsServiceLocal.AddEffect(effectForDB);
+            if(EffectsServiceLocal.AddEffect(effectForDB) == false)
+                return InternalServerError();
 
             return CreatedAtRoute("DefaultApi", new { id = effectForDB.EffectId }, effectForDB);
         }
@@ -87,7 +88,7 @@ namespace API_02.Controllers
                 .Map<API_02.Models.EffectModel, NivelAccesDate_ORM_CodeFirst.Models.Effect>(effect);
             if (EffectsServiceLocal.UpdateEffect(id, effectForDB) == false)
             {
-                return NotFound();
+                return InternalServerError();
             }
 
             return Ok(effect);
@@ -99,7 +100,7 @@ namespace API_02.Controllers
             if (EffectsServiceLocal.DeleteToggleEffect(id, true) == true)
                 return Ok(id);
             else
-                return BadRequest(id);
+                return InternalServerError();
         }
     }
 }

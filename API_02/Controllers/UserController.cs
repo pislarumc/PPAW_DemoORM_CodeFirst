@@ -82,7 +82,8 @@ namespace API_02.Controllers
                 .Map< API_02.Models.UserModel, NivelAccesDate_ORM_CodeFirst.Models.User>(user);
             //db.Users.Add(userForDB);
             //db.SaveChanges();
-            UsersServiceLocal.AddUser(userForDB);
+            if(UsersServiceLocal.AddUser(userForDB) == false)
+                return InternalServerError();
 
             return CreatedAtRoute("DefaultApi", new { id = userForDB.UserId}, userForDB);
         }
@@ -124,7 +125,7 @@ namespace API_02.Controllers
             //}
             if(UsersServiceLocal.UpdateUser(id,userForDB)==false)
             {
-                return NotFound();
+                return InternalServerError();
             }
 
             return Ok(user);
@@ -136,7 +137,7 @@ namespace API_02.Controllers
             if (UsersServiceLocal.DeleteToggleUser(id, true) == true)
                 return Ok(id);
             else
-                return BadRequest(id);
+                return InternalServerError();
         }
     }
 }

@@ -12,6 +12,8 @@ namespace API_02.Models
         public string Path { get; set; }
         public string Dimensions { get; set; }
         public bool Deleted { get; set; }
+
+        //the actual foreign key
         public string UserId { get; set; }
 
         // foreign key 

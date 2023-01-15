@@ -69,6 +69,11 @@ namespace Business_Layer
                 db.Users.Add(userForDB);
                 db.SaveChanges();
                 cacheManager.Remove("user_list_all");
+
+                History historyForDB = HistoriesService.AdaugareIstoric("Adaugare user: ", null, userForDB.UserId, null);
+                db.Histories.Add(historyForDB);
+                db.SaveChanges();
+
                 return true;
             }
             catch
@@ -79,6 +84,23 @@ namespace Business_Layer
         public bool UpdateUser(string id,User userForDB)
         {
             db.Entry(userForDB).State = EntityState.Modified;
+            //----------------------------------------------------------------------------------------------------------------------------------
+            string changed_properties = "";
+            int nr_changed_properties = 0;
+
+            var change = db.Entry(userForDB);
+            var entityName = change.Entity.GetType().Name;
+            foreach (var prop in change.OriginalValues.PropertyNames)
+            {
+                var originalValue = change.GetDatabaseValues()[prop]?.ToString();
+                var currentValue = change.CurrentValues[prop]?.ToString();
+                if (originalValue != currentValue)
+                {
+                    changed_properties += prop + ", ";
+                    nr_changed_properties++;
+                }
+            }
+            //----------------------------------------------------------------------------------------------------------------------------------
             try
             {
                 db.SaveChanges();
@@ -89,6 +111,12 @@ namespace Business_Layer
                 cacheManager.RemoveByPattern(list_key);
                 //get back data to cache
                 cacheManager.Set(individual_key, userForDB);
+
+                //adaugare  istoric
+                History historyForDB = HistoriesService.AdaugareIstoric("Modificare user[ " + nr_changed_properties + " ]: " + changed_properties, null, userForDB.UserId, null);
+                db.Histories.Add(historyForDB);
+                db.SaveChanges();
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -124,8 +152,15 @@ namespace Business_Layer
                     string list_key = "user_list";
                     cacheManager.Remove(individual_key);
                     cacheManager.RemoveByPattern(list_key);
+
+                    //adaugare date in istoric
+                    History historyForDB = HistoriesService.AdaugareIstoric("Stergere user", null, id, null);
+                    db.Histories.Add(historyForDB);
+                    db.SaveChanges();
+                    return true;
                 }
-                return true;
+                else
+                    return false;
             }
             catch(Exception err) { return false; }
 

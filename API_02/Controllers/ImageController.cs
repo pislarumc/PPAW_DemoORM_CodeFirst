@@ -80,6 +80,7 @@ namespace API_02.Controllers
             API_02.Models.ImageModel image = mapper
                 .Map<NivelAccesDate_ORM_CodeFirst.Models.Image, API_02.Models.ImageModel>(imageFromDB);
             image.UserModel = mapper_user.Map<NivelAccesDate_ORM_CodeFirst.Models.User, API_02.Models.UserModel>(imageFromDB.User);
+
             //delete passwords
             image.UserModel.Password = null;
             return Ok(image);
@@ -95,7 +96,8 @@ namespace API_02.Controllers
             Mapper mapper = new Mapper(config);
             NivelAccesDate_ORM_CodeFirst.Models.Image imageForDB = mapper
                 .Map<API_02.Models.ImageModel, NivelAccesDate_ORM_CodeFirst.Models.Image>(image);
-            ImagesServiceLocal.AddImage(imageForDB);
+            if (ImagesServiceLocal.AddImage(imageForDB) == false)
+                return InternalServerError();
 
             return CreatedAtRoute("DefaultApi", new { id = imageForDB.ImageId }, imageForDB);
         }
@@ -116,11 +118,9 @@ namespace API_02.Controllers
             Mapper mapper = new Mapper(config);
             NivelAccesDate_ORM_CodeFirst.Models.Image imageForDB = mapper
                 .Map<API_02.Models.ImageModel, NivelAccesDate_ORM_CodeFirst.Models.Image>(image);
-            imageForDB.User = new User();
-            imageForDB.User.UserId = image.UserModel.UserId;
             if (ImagesServiceLocal.UpdateImage(id, imageForDB) == false)
             {
-                return NotFound();
+                return InternalServerError();
             }
 
             return Ok(image);
@@ -132,7 +132,7 @@ namespace API_02.Controllers
             if (ImagesServiceLocal.DeleteToggleImage(id, true) == true)
                 return Ok(id);
             else
-                return BadRequest(id);
+                return InternalServerError();
         }
     }
 }

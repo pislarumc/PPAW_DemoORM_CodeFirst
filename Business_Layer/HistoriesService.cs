@@ -111,8 +111,10 @@ namespace Business_Layer
                     string list_key = "history_list";
                     cacheManager.Remove(individual_key);
                     cacheManager.RemoveByPattern(list_key);
+                    return true;
                 }
-                return true;
+                else
+                    return false;
             }
             catch (Exception err) { return false; }
 
@@ -121,6 +123,22 @@ namespace Business_Layer
         public bool HistoryExists(string id)
         {
             return db.Histories.Count(e => e.HistoryId == id) > 0;
+        }
+
+        public static History AdaugareIstoric(string descriere, string efect, string user, string imagine)
+        {
+            Random rnd = new Random();
+            History historyForDB = new History
+            {
+                LoggingTime = DateTime.UtcNow,
+                HistoryId = rnd.Next(1000, 10000) + "_" + DateTime.UtcNow,
+                Description = descriere,
+                EffectId = efect,
+                UserId = user,
+                ImageId = imagine
+
+            };
+            return historyForDB;
         }
 
 

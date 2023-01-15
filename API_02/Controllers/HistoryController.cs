@@ -110,7 +110,8 @@ namespace API_02.Controllers
             Mapper mapper = new Mapper(config);
             NivelAccesDate_ORM_CodeFirst.Models.History historyForDB = mapper
                 .Map<API_02.Models.HistoryModel, NivelAccesDate_ORM_CodeFirst.Models.History>(history);
-            HistoriesServiceLocal.AddHistory(historyForDB);
+            if(HistoriesServiceLocal.AddHistory(historyForDB) == false)
+                return InternalServerError();
 
             return CreatedAtRoute("DefaultApi", new { id = historyForDB.HistoryId }, historyForDB);
         }
@@ -133,7 +134,7 @@ namespace API_02.Controllers
                 .Map<API_02.Models.HistoryModel, NivelAccesDate_ORM_CodeFirst.Models.History>(history);
             if (HistoriesServiceLocal.UpdateHistory(id, historyForDB) == false)
             {
-                return NotFound();
+                return InternalServerError();
             }
 
             return Ok(history);
@@ -145,7 +146,7 @@ namespace API_02.Controllers
             if (HistoriesServiceLocal.DeleteHistory(id) == true)
                 return Ok(id);
             else
-                return BadRequest(id);
+                return InternalServerError();
         }
     }
 }
