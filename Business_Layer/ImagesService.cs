@@ -10,11 +10,14 @@ using System.Text;
 using System.Threading.Tasks;
 using Business_Layer.Interfaces;
 using System.Runtime.Remoting.Contexts;
+using NLog;
 
 namespace Business_Layer
 {
     public class ImagesService:IImages
     {
+
+        protected Logger logger = LogManager.GetCurrentClassLogger();
 
         private DatabaseContext db;
 
@@ -30,27 +33,40 @@ namespace Business_Layer
             string key = "image_list_all";
             List<Image> images;
 
+            logger.Error("Intrare in get imagini");
+
             if (cacheManager.IsSet(key))
             {
                 images = cacheManager.Get<List<Image>>(key);
             }
             else
             {
-                images = db.Images.Include(img => img.User).ToList();
-                cacheManager.Set(key, images);
+                try
+                {
+                    images = db.Images.Include(img => img.User).ToList();
+                    cacheManager.Set(key, images);
+                }
+                catch(Exception exception)
+                {
+                    logger.Error(exception,"Eroare la preluare imagini din db");
+                    images = null;
+                }
             }
-
-
-
             return images;
         }
 
         public List<string> GetImageUsers()
         {
             List<string> usersId;
-
-            usersId = db.Users.Where(user => user.Deleted == false).Select(user => user.UserId).ToList();
-
+            try
+            {
+                usersId = db.Users.Where(user => user.Deleted == false).Select(user => user.UserId).ToList();
+            }
+            catch (Exception exception)
+            {
+                logger.Error(exception, "Eroare la preluare imagine din db");
+                usersId = null;
+            }
             return usersId;
         }
 
