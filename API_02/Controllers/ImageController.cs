@@ -99,6 +99,7 @@ namespace API_02.Controllers
             if (ImagesServiceLocal.AddImage(imageForDB) == false)
                 return InternalServerError();
 
+            //return CreatedAtRoute("DefaultApi", new { id = imageForDB.ImageId }, imageForDB);
             return CreatedAtRoute("DefaultApi", new { id = imageForDB.ImageId }, imageForDB);
         }
 

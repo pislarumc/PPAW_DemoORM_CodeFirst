@@ -25,6 +25,10 @@ namespace API_02
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //added for dependency injection
             ContainerConfigurer.ConfigureContainer();
+
+            //for post serialization bug solving
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            GlobalConfiguration.Configuration.Formatters.Remove(GlobalConfiguration.Configuration.Formatters.XmlFormatter);
         }
     }
 }

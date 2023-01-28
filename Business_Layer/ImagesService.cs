@@ -101,8 +101,9 @@ namespace Business_Layer
 
                 return true;
             }
-            catch
+            catch(Exception exception)
             {
+                logger.Error(exception, "Eroare la creare iamgine");
                 return false;
             }
         }
@@ -147,6 +148,7 @@ namespace Business_Layer
             }
             catch (DbUpdateConcurrencyException)
             {
+                logger.Error("Eroare la actualizare imagine din db");
                 if (db.Images.Count(e => e.ImageId == id) == 0)
                 {
                     return false;
@@ -189,7 +191,10 @@ namespace Business_Layer
                 else
                     return false;
             }
-            catch (Exception err) { return false; }
+            catch (Exception exception) {
+                logger.Error(exception, "Eroare la stergere iamgine");
+                return false; 
+            }
 
         }
 

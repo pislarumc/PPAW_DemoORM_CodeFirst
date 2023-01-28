@@ -1,1 +1,8 @@
-2023-01-16 18:58:42.1643|ERROR|Business_Layer.ImagesService|Intrare in get imagine
+2023-01-29 00:03:43.6371|ERROR|Business_Layer.ImagesService|Intrare in get imagini
+2023-01-29 00:03:50.2206|ERROR|Business_Layer.ImagesService|Intrare in get imagini
+2023-01-29 00:04:02.0229|ERROR|Business_Layer.ImagesService|Intrare in get imagini
+2023-01-29 00:05:15.6320|ERROR|Business_Layer.ImagesService|Intrare in get imagini
+2023-01-29 00:06:15.9966|ERROR|Business_Layer.ImagesService|Intrare in get imagini
+2023-01-29 00:06:18.6420|ERROR|Business_Layer.ImagesService|Intrare in get imagini
+2023-01-29 00:06:31.5547|ERROR|Business_Layer.ImagesService|Intrare in get imagini
+2023-01-29 00:06:49.6721|ERROR|Business_Layer.ImagesService|Intrare in get imagini
