@@ -9,11 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business_Layer.Interfaces;
+using NLog;
 
 namespace Business_Layer
 {
     public class EffectsService:IEffects
     {
+
+        protected Logger logger = LogManager.GetCurrentClassLogger();
+
         private DatabaseContext db;
 
         private ICache cacheManager;
@@ -34,10 +38,17 @@ namespace Business_Layer
             }
             else
             {
-                effects = db.Effects.ToList();
-                cacheManager.Set(key, effects);
+                try
+                {
+                    effects = db.Effects.ToList();
+                    cacheManager.Set(key, effects);
+                }
+                catch (Exception exception)
+                {
+                    logger.Error(exception, "Eroare la preluare efecte din db");
+                    effects = null;
+                }
             }
-
             return effects;
         }
         public Effect GetEffect(string id)
@@ -51,8 +62,16 @@ namespace Business_Layer
             }
             else
             {
-                effect = db.Effects.Find(id);
-                cacheManager.Set(key, effect);
+                try
+                {
+                    effect = db.Effects.Find(id);
+                    cacheManager.Set(key, effect);
+                }
+                catch(Exception exception)
+                {
+                    logger.Error(exception, "Eroare la preluare efect din db");
+                    effect = null;
+                }
             }
             return effect;
         }
@@ -70,8 +89,9 @@ namespace Business_Layer
 
                 return true;
             }
-            catch
+            catch(Exception exception)
             {
+                logger.Error(exception, "Eroare la adaugare efect in db");
                 return false;
             }
         }
@@ -116,6 +136,7 @@ namespace Business_Layer
             }
             catch (DbUpdateConcurrencyException)
             {
+                logger.Error("Eroare editare efect");
                 if (db.Effects.Count(e => e.EffectId == id) == 0)
                 {
                     return false;
@@ -158,7 +179,11 @@ namespace Business_Layer
                 else
                     return false;
             }
-            catch (Exception err) { return false; }
+            catch (Exception exception) 
+            {
+                logger.Error(exception, "Eroare la stergere efect din db");
+                return false;
+            }
 
         }
 

@@ -2,6 +2,7 @@
 using Business_Layer.Interfaces;
 using NivelAccesDate_ORM_CodeFirst.Interfaces;
 using NivelAccesDate_ORM_CodeFirst.Models;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -16,6 +17,7 @@ namespace Business_Layer
 {
     public class UsersService : IUsers
     {
+        protected Logger logger = LogManager.GetCurrentClassLogger();
         //public DatabaseContext db = new DatabaseContext();
         private DatabaseContext db;
 
@@ -40,10 +42,17 @@ namespace Business_Layer
             }
             else
             {
-                users = db.Users.ToList();
-                cacheManager.Set(key, users);
+                try
+                {
+                    users = db.Users.ToList();
+                    cacheManager.Set(key, users);
+                }
+                catch(Exception exception)
+                {
+                    logger.Error(exception, "Eroare la preluare utilizatori din db");
+                    users = null;
+                }
             }
-
             return users;
         }
         public User GetUser(string id)
@@ -57,8 +66,16 @@ namespace Business_Layer
             }
             else
             {
-                user = db.Users.Find(id);
-                cacheManager.Set(key, user);
+                try
+                {
+                    user = db.Users.Find(id);
+                    cacheManager.Set(key, user);
+                }
+                catch(Exception exception)
+                {
+                    logger.Error(exception, "Eroare la preluare utilizator din db");
+                    user = null;
+                }
             }
             return user;
         }
@@ -76,8 +93,9 @@ namespace Business_Layer
 
                 return true;
             }
-            catch
+            catch(Exception exception)
             {
+                logger.Error(exception, "Eroare la adaugare utilizator din db");
                 return false;
             }
         }
@@ -120,6 +138,7 @@ namespace Business_Layer
             }
             catch (DbUpdateConcurrencyException)
             {
+                logger.Error("Eroare la editare utilizator din db");
                 if (db.Users.Count(e => e.UserId == id) == 0)
                 {
                     return false;
@@ -162,7 +181,11 @@ namespace Business_Layer
                 else
                     return false;
             }
-            catch(Exception err) { return false; }
+            catch(Exception exception) 
+            {
+                logger.Error(exception, "Eroare la stergere utilizator din db");
+                return false;
+            }
 
         }
 

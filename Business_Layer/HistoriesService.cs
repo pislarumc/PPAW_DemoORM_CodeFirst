@@ -9,11 +9,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Business_Layer.Interfaces;
+using NLog;
 
 namespace Business_Layer
 {
     public class HistoriesService:IHistories
     {
+        protected Logger logger = LogManager.GetCurrentClassLogger();
+
         private DatabaseContext db;
 
         private ICache cacheManager;
@@ -34,8 +37,16 @@ namespace Business_Layer
             }
             else
             {
-                histories = db.Histories.Include(his => his.User).Include(his => his.Image).Include(his => his.Effect).Include(his => his.Image.User).ToList();
-                cacheManager.Set(key, histories);
+                try
+                {
+                    histories = db.Histories.Include(his => his.User).Include(his => his.Image).Include(his => his.Effect).Include(his => his.Image.User).ToList();
+                    cacheManager.Set(key, histories);
+                }
+                catch(Exception exception)
+                {
+                    logger.Error(exception, "Eroare la preluare istorice din db");
+                    histories = null;
+                }
             }
 
             return histories;
@@ -51,8 +62,16 @@ namespace Business_Layer
             }
             else
             {
-                history = db.Histories.Include(his => his.User).Include(his => his.Image).Include(his => his.Effect).Include(his => his.Image.User).FirstOrDefault(his => his.HistoryId == id);
-                cacheManager.Set(key, history);
+                try
+                {
+                    history = db.Histories.Include(his => his.User).Include(his => his.Image).Include(his => his.Effect).Include(his => his.Image.User).FirstOrDefault(his => his.HistoryId == id);
+                    cacheManager.Set(key, history);
+                }
+                catch(Exception exception)
+                {
+                    logger.Error(exception, "Eroare la preluare istoric din db");
+                    history = null;
+                }
             }
             return history;
         }
@@ -65,8 +84,9 @@ namespace Business_Layer
                 cacheManager.Remove("history_list_all");
                 return true;
             }
-            catch
+            catch(Exception exception)
             {
+                logger.Error(exception, "Eroare la adaugare istoric in db");
                 return false;
             }
         }
@@ -86,6 +106,7 @@ namespace Business_Layer
             }
             catch (DbUpdateConcurrencyException)
             {
+                logger.Error( "Eroare la editare istoric din db");
                 if (db.Histories.Count(e => e.HistoryId == id) == 0)
                 {
                     return false;
@@ -116,7 +137,11 @@ namespace Business_Layer
                 else
                     return false;
             }
-            catch (Exception err) { return false; }
+            catch (Exception exception) 
+            {
+                logger.Error(exception, "Eroare la stergere istoric din db");
+                return false;
+            }
 
         }
 

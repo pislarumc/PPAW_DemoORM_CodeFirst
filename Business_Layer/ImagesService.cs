@@ -33,8 +33,6 @@ namespace Business_Layer
             string key = "image_list_all";
             List<Image> images;
 
-            logger.Error("Intrare in get imagini");
-
             if (cacheManager.IsSet(key))
             {
                 images = cacheManager.Get<List<Image>>(key);
